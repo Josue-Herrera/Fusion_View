@@ -75,6 +75,8 @@ add_library(ImGui-SFML
   ${IMGUI_SOURCES}
 )
 
+set_target_properties(ImGui-SFML PROPERTIES FOLDER "Support Libraries")
+
 # Add pretty alias
 add_library(ImGui-SFML::ImGui-SFML ALIAS ImGui-SFML)
 

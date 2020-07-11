@@ -1,6 +1,6 @@
 #include "imgui.h"
 #include "imgui-SFML.h"
-#include "./addons/imguitoolbar/imguitoolbar.h"
+
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
@@ -32,8 +32,7 @@ int main()
     float color[3] = { 0.f, 0.f, 0.f };
 
     window.resetGLStates(); // call it if you only draw ImGui. Otherwise not needed.
-    static ImGui::Toolbar toolbar("myFirstToolbar##foo");
-
+  
     sf::Clock deltaClock;
     while (window.isOpen()) {
         sf::Event event;
