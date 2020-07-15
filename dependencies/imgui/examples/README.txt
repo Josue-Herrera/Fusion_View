@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------
- dear imgui, v1.77
+ dear imgui, v1.78 WIP
 -----------------------------------------------------------------------
  examples/README.txt
  (This is the README file for the examples/ folder. See docs/ for more documentation)
@@ -11,7 +11,6 @@ Dear ImGui is highly portable and only requires a few things to run and render:
  - Uploading the font atlas texture into graphics memory
  - Providing a render function to render indexed textured triangles
  - Optional: clipboard support, mouse cursor supports, Windows IME support, etc.
- - Optional (Advanced,Beta): platform window API to use multi-viewport.
 
 This is essentially what the example bindings in this folder are providing + obligatory portability cruft.
 
@@ -101,15 +100,9 @@ Most the example bindings are split in 2 parts:
 
  - Road-map: Dear ImGui 1.80 (WIP currently in the "docking" branch) will allows imgui windows to be
    seamlessly detached from the main application window. This is achieved using an extra layer to the
-   platform and renderer bindings, which allows Dear ImGui to communicate platform-specific requests such as
-   "create an additional OS window", "create a render context", "get the OS position of this window" etc.
-   When using this feature, the coupling with your OS/renderer becomes much tighter than a regular imgui
-   integration. It is also much more complicated and require more work to integrate correctly.
-   If you are new to imgui and you are trying to integrate it into your application, first try to ignore
-   everything related to Viewport and Platform Windows. You'll be able to come back to it later!
-   Note that if you decide to use unmodified imgui_impl_xxxx.cpp files, you will automatically benefit
-   from improvements and fixes related to viewports and platform windows without extra work on your side.
-   See 'ImGuiPlatformIO' for details.
+   platform and renderer bindings, which allows Dear ImGui to communicate platform-specific requests.
+   If you decide to use unmodified imgui_impl_xxxx.cpp files, you will automatically benefit from
+   improvements and fixes related to viewports and platform windows without extra work on your side.
 
 
 List of Platforms Bindings in this repository:
@@ -211,7 +204,7 @@ example_glfw_opengl2/
     GLFW + OpenGL2 example (legacy, fixed pipeline).
     = main.cpp + imgui_impl_glfw.cpp + imgui_impl_opengl2.cpp
     **DO NOT USE OPENGL2 CODE IF YOUR CODE/ENGINE IS USING MODERN OPENGL (SHADERS, VBO, VAO, etc.)**
-    **Prefer using OPENGL3 code (with gl3w/glew/glad/glbinding, you can replace the OpenGL function loader)**
+    **Prefer using OPENGL3 code (with gl3w/glew/glad/glad2/glbinding, you can replace the OpenGL function loader)**
     This code is mostly provided as a reference to learn about Dear ImGui integration, because it is shorter.
     If your code is using GL3+ context or any semi modern OpenGL calls, using this renderer is likely to
     make things more complicated, will require your code to reset many OpenGL attributes to their initial
@@ -260,7 +253,7 @@ example_sdl_opengl2/
     SDL2 (Win32, Mac, Linux etc.) + OpenGL example (legacy, fixed pipeline).
     = main.cpp + imgui_impl_sdl.cpp + imgui_impl_opengl2.cpp
     **DO NOT USE OPENGL2 CODE IF YOUR CODE/ENGINE IS USING MODERN OPENGL (SHADERS, VBO, VAO, etc.)**
-    **Prefer using OPENGL3 code (with gl3w/glew/glad/glbinding, you can replace the OpenGL function loader)**
+    **Prefer using OPENGL3 code (with gl3w/glew/glad/glad2/glbinding, you can replace the OpenGL function loader)**
     This code is mostly provided as a reference to learn about Dear ImGui integration, because it is shorter.
     If your code is using GL3+ context or any semi modern OpenGL calls, using this renderer is likely to
     make things more complicated, will require your code to reset many OpenGL attributes to their initial

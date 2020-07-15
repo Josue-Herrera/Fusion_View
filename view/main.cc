@@ -8,8 +8,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow* window);
 
 void processInput(GLFWwindow* window)
 {
@@ -37,7 +35,7 @@ std::string get_current_dir() {
     return current_working_dir;
 }
 
-int main()
+int main(int argc, char** argv)
 {
   
 
@@ -46,7 +44,7 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	
-	GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(800, 600, "Fusion View", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -71,20 +69,17 @@ int main()
 
 	// Setup Platform/Renderer bindings
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
-	const char* glsl_version = "#version 130";
+	const char* glsl_version = "#version 410";
 	ImGui_ImplOpenGL3_Init(glsl_version);
 
     // Our state
     bool show_demo_window = true;
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-    
-    std::fstream fs("D:\workspace\Fusion_View_old\resources\fonts\Open_Sans\New Text Document.txt");
+ 
   
+    ImFont* font2 = io.Fonts->AddFontFromFileTTF("..\\..\\resources\\fonts\\Open_Sans\\OpenSans-SemiBold.ttf",13.0f);
    
-    ImFont* font1 = io.Fonts->AddFontDefault();
-    ImFont* font2 = io.Fonts->AddFontFromFileTTF("D:\workspace\Fusion_View_old\resources\fonts\Open_Sans\OpenSans - Regular.ttf", 12.0f);
-
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
@@ -99,7 +94,7 @@ int main()
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-
+       
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
         if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);
@@ -110,8 +105,9 @@ int main()
             static int counter = 0;
 
             ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+            
+            ImGui::Text("This is some useful text.");
+                        // Display some text (you can use a format strings too)
             ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
             ImGui::Checkbox("Another Window", &show_another_window);
 
@@ -122,18 +118,11 @@ int main()
                 counter++;
             ImGui::SameLine();
             ImGui::Text("counter = %d", counter);
-
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             ImGui::End();
         }
 
-        ImGui::Begin("Test #1397");
-        ImGui::Text("Hello!");
-        ImGui::PushFont(font2);
-        ImGui::Text("Hello!");
-        ImGui::PopFont();
-        ImGui::End();
-
+  
 
         // 3. Show another simple window.
         if (show_another_window)
