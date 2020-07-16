@@ -22,6 +22,11 @@ namespace fv {
 			// Add a layer stack of IMGUI Functions organized in the appropriate order.
 			// this is odd but still  good i think !! needs more redesign. Not satisfied with the code yet
 			// but its working
+			//Example of how EZ it is.
+			if (ImGui::BeginMainMenuBar()) {
+
+				ImGui::EndMainMenuBar();
+			}
 
 			//Example -> you only need to call the Imgui Functions in here and you have to manage state in certain circumstances.
 			imgui->showDemo();
