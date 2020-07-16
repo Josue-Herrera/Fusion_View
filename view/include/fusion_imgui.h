@@ -1,5 +1,12 @@
 #pragma once 
 
+#include "imgui.h"
+#include "examples/imgui_impl_glfw.h"
+#include "examples/imgui_impl_opengl3.h"
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 namespace fv {
 	class Fusion_Imgui {
 	public:
@@ -7,7 +14,11 @@ namespace fv {
 		~Fusion_Imgui();
 		void start();
 		void end();
+		void showDemo();
+		bool shutdown();
 	private:
-
+		bool show_demo_window = true;
+		bool show_another_window = false;
+		GLFWwindow* fv_window;
 	};
 }

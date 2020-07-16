@@ -1,6 +1,6 @@
 #pragma once
 
-#include "window_view.h"
+#include "fusion_imgui.h"
 
 namespace fv {
 	class Fusion_View
@@ -9,7 +9,11 @@ namespace fv {
 	public:
 		Fusion_View();
 		~Fusion_View();
+		void run();
+	private:
+		Fusion_Imgui* imgui;
 
 	};
 
+	
 }
