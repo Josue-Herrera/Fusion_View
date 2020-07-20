@@ -1,3 +1,9 @@
+
+#ifdef WIN32
+#include <Windows.h>
+#endif // console Hide commands
+
+
 #include "..\include\fusion_imgui.h"
 #include <iostream>
 
@@ -7,7 +13,7 @@
 namespace fv {
 	static int width;
 	static int height;
-	static  ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+	static  ImVec4 clear_color = ImVec4(0.1f, 0.1f, 0.10f, 1.00f);
 
 	void glfw_error_callbacks(int error, const char* description)
 	{
@@ -23,6 +29,9 @@ namespace fv {
 
 	Fusion_Imgui::Fusion_Imgui()
 	{
+#ifdef WIN32 
+		::ShowWindow(::GetConsoleWindow(), SW_HIDE);
+#endif
 		glfwSetErrorCallback(glfw_error_callbacks);
 
 		if (!glfwInit()) {

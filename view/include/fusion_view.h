@@ -12,6 +12,7 @@ namespace fv {
 		~Fusion_View();
 		void run();
 	private:
+		void loadComponents();
 		Fusion_Imgui* imgui;
 		Gui_Stack gui_stack;
 	};

@@ -6,9 +6,7 @@ namespace fv {
 	Fusion_View::Fusion_View()
 	{
 		imgui = new Fusion_Imgui();
-
-		Layer* mm = new Main_Menu();
-		gui_stack.PushGui(mm);
+		loadComponents();
 	}
 
 	Fusion_View::~Fusion_View()
@@ -32,9 +30,15 @@ namespace fv {
 			//Example of how EZ it is.
 			
 			//Example -> you only need to call the Imgui Functions in here and you have to manage state in certain circumstances.
-			imgui->showDemo();
+			//imgui->showDemo();
 
 			imgui->end();
 		}
+	}
+
+	void Fusion_View::loadComponents() {
+
+		Layer* mm = new Main_Menu();
+		gui_stack.PushGui(mm);
 	}
 }
