@@ -6,8 +6,14 @@ set(source
 main.cc
 src/fusion_view.cc
 src/fusion_imgui.cc
+src/gui_stack.cc
+src/main_menu.cc
 include/fusion_imgui.h
 include/fusion_view.h
+include/gui_layer.h
+include/gui_stack.h
+include/main_menu.h
+include/components.h
 )
 
 set_property( DIRECTORY PROPERTY VS_STARTUP_PROJECT "Fusion_View" )

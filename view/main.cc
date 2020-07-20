@@ -3,8 +3,9 @@
 
  int main(int argc, char** argv)
 {
-    fv::Fusion_View fvs;
-    fvs.run();
+    using App = fv::Fusion_View;
+    App Fusion_View;
+    Fusion_View.run();
 
     return 0;
 }
