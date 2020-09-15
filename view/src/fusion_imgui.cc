@@ -64,7 +64,7 @@ namespace fv {
 		ImGui_ImplGlfw_InitForOpenGL(fv_window, true);
 		const char* glsl_version = "#version 410";
 		ImGui_ImplOpenGL3_Init(glsl_version);
-		io.Fonts->AddFontFromFileTTF("..\\..\\resources\\fonts\\Open_Sans\\OpenSans-SemiBold.ttf", 12.0f);
+		io.Fonts->AddFontFromFileTTF("..\\..\\resources\\fonts\\Open_Sans\\OpenSans-SemiBold.ttf", 16.0f);
 		
 
 

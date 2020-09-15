@@ -17,6 +17,7 @@ namespace fv {
 		void loadDarkStyle();
 		Fusion_Imgui* imgui;
 		Gui_Stack gui_stack;
+		bool should_close = false;
 	};
 
 	

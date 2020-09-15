@@ -16,6 +16,7 @@ namespace fv {
 		void end();
 		void showDemo();
 		bool shutdown();
+		void test_ForceShutdown() { glfwSetWindowShouldClose(fv_window, GLFW_TRUE); };
 	private:
 		bool show_demo_window = true;
 		bool show_another_window = false;

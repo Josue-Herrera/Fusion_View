@@ -22,6 +22,11 @@ void fv::Main_Menu::header_bar()
 
 	ImGui::TextDisabled(" Fusion ");
 
+	ImGui::SameLine(max_width - 63.0f);
+	if (ImGui::Button("CLOSE")) {
+		*close = true;
+	}
+
 	ImGui::End();
 }
 
@@ -35,9 +40,7 @@ bool fv::Main_Menu::msw_window_view()
 								ImGuiWindowFlags_NoBringToFrontOnFocus;
 	
 	ImGui::Begin("MainSideWindow##1", &main_side_open, msw_flags);
-
 	
-
 	ImGui::End();
 
 	return true;

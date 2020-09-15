@@ -29,7 +29,9 @@ namespace fv {
 				component->RenderGui();
 			}
 			//Example of how EZ it is.
-			
+			if (should_close)
+				imgui->test_ForceShutdown();
+
 			//Example -> you only need to call the Imgui Functions in here and you have to manage state in certain circumstances.
 			imgui->showDemo();
 
@@ -39,7 +41,7 @@ namespace fv {
 
 	void Fusion_View::loadComponents() {
 
-		Layer* mm = new Main_Menu();
+		Layer* mm = new Main_Menu(&should_close);
 		gui_stack.PushGui(mm);
 	}
 	void Fusion_View::loadDarkStyle()

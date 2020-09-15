@@ -11,14 +11,14 @@ namespace fv {
 	class Main_Menu : public Layer
 	{
 		public:
-		Main_Menu() { 
+		Main_Menu(bool * close): close(close) { 
 			this->name = "Main Menu"; 
 		};
 		void RenderGui();
 		~Main_Menu() = default;
 
 	private:
-		 
+		bool * close;
 		bool main_side_open;
 		int msw_starting_height;
 		msw_window_size msw_size;
