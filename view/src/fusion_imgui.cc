@@ -59,13 +59,14 @@ namespace fv {
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 
-		// Setup Dear ImGui style
-		ImGui::StyleColorsLight();
+		
 		
 		ImGui_ImplGlfw_InitForOpenGL(fv_window, true);
 		const char* glsl_version = "#version 410";
 		ImGui_ImplOpenGL3_Init(glsl_version);
-		io.Fonts->AddFontFromFileTTF("..\\..\\resources\\fonts\\Open_Sans\\OpenSans-SemiBold.ttf", 16.0f);
+		io.Fonts->AddFontFromFileTTF("..\\..\\resources\\fonts\\Open_Sans\\OpenSans-SemiBold.ttf", 12.0f);
+		
+
 
 	}
 	Fusion_Imgui::~Fusion_Imgui()
@@ -135,6 +136,8 @@ namespace fv {
 	{
 		return glfwWindowShouldClose(fv_window);
 	}
+
+	
 
 	void Fusion_Imgui::end()
 	{

@@ -12,7 +12,9 @@ namespace fv {
 		~Fusion_View();
 		void run();
 	private:
+		ImFont* label_font;
 		void loadComponents();
+		void loadDarkStyle();
 		Fusion_Imgui* imgui;
 		Gui_Stack gui_stack;
 	};
