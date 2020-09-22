@@ -1,5 +1,10 @@
 #include "..\include\main_menu.h"
 #include "imgui.h"
+#include "imgui_helper.h"
+#include <cmrc/cmrc.hpp>
+
+CMRC_DECLARE(fv);
+
 void fv::Main_Menu::RenderGui()
 {	
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.19f, 0.18f, 0.18f, 1.00f));
@@ -33,14 +38,23 @@ void fv::Main_Menu::header_bar()
 bool fv::Main_Menu::msw_window_view()
 {
 	msw_set_window_size();
-
+	
 	
 	ImGuiWindowFlags msw_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar 
 								| ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | 
 								ImGuiWindowFlags_NoBringToFrontOnFocus;
 	
+
+	auto fs = cmrc::fv::get_filesystem();
+	auto font = fs.open("google/home/3x/baseline_home_white_18dp.png");
+ 
+	LoadTextureFromMemory((unsigned char*)font.begin(), font.size(), &texture, &w, &h);
+
 	ImGui::Begin("MainSideWindow##1", &main_side_open, msw_flags);
-	
+	ImGui::NewLine();
+	ImGui::NewLine();
+	ImGui::NewLine();
+	ImGui::Image((void*)(intptr_t)texture, ImVec2((float)w*10, (float)h*10));
 	ImGui::End();
 
 	return true;
@@ -52,7 +66,7 @@ void fv::Main_Menu::msw_set_window_size()
 	auto io = ImGui::GetIO();
 	float max_height = io.DisplaySize.y;
 	ImGui::SetNextWindowPos(ImVec2(0, 21));
-	ImGui::SetNextWindowSize(ImVec2(72, max_height));
+	ImGui::SetNextWindowSize(ImVec2(500, max_height));
 
 }
 

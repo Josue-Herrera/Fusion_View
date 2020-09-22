@@ -2,20 +2,21 @@ project(Fusion_View)
 
 find_package(OpenGL REQUIRED)
 
+
 set(source 
 main.cc
 src/fusion_view.cc
 src/fusion_imgui.cc
 src/gui_stack.cc
 src/main_menu.cc
-src/test_window_view.cc
+src/imgui_helper.cc
 include/fusion_imgui.h
 include/fusion_view.h
 include/gui_layer.h
 include/gui_stack.h
 include/main_menu.h
 include/components.h
-include/test_window_view.h
+include/imgui_helper.h
 )
 
 set_property( DIRECTORY PROPERTY VS_STARTUP_PROJECT "Fusion_View" )
@@ -34,4 +35,6 @@ target_link_libraries(${PROJECT_NAME}
         glad
         ImGui
         glm
+    PRIVATE
+        fv::Resources
 )

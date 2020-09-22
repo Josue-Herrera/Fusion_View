@@ -1,11 +1,17 @@
 #include "fusion_view.h"
 #include "imgui.h"
 #include "components.h"
+#include <cmrc/cmrc.hpp>
+#include <algorithm>
+#include "imgui_helper.h"
+
+CMRC_DECLARE(fv);
 
 namespace fv {
 	Fusion_View::Fusion_View()
 	{
 		imgui = new Fusion_Imgui();
+
 		loadComponents();
 		loadDarkStyle();
 	}
@@ -33,7 +39,7 @@ namespace fv {
 				imgui->test_ForceShutdown();
 
 			//Example -> you only need to call the Imgui Functions in here and you have to manage state in certain circumstances.
-			imgui->showDemo();
+			//imgui->showDemo();
 
 			imgui->end();
 		}

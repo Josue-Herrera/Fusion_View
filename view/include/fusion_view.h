@@ -12,6 +12,7 @@ namespace fv {
 		~Fusion_View();
 		void run();
 	private:
+
 		ImFont* label_font;
 		void loadComponents();
 		void loadDarkStyle();

@@ -20,7 +20,6 @@ namespace fv {
 	private:
 		bool show_demo_window = true;
 		bool show_another_window = false;
-		
 		GLFWwindow* fv_window;
 	};
 }
