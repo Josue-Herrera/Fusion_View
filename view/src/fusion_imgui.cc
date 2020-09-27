@@ -3,9 +3,13 @@
 #include <Windows.h>
 #endif // console Hide commands
 
+#include <iostream>
 
 #include "..\include\fusion_imgui.h"
-#include <iostream>
+
+#include "misc/freetype/imgui_freetype.h"
+#include "misc/freetype/imgui_freetype.cpp"
+
 
 /// <summary>
 /// This code NEEDS a REDESIGN PLS HELP DANNY !! 
@@ -58,14 +62,14 @@ namespace fv {
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
-
-		
 		
 		ImGui_ImplGlfw_InitForOpenGL(fv_window, true);
 		const char* glsl_version = "#version 410";
 		ImGui_ImplOpenGL3_Init(glsl_version);
-		io.Fonts->AddFontFromFileTTF("..\\..\\resources\\fonts\\Open_Sans\\OpenSans-SemiBold.ttf", 16.0f);
-		
+	
+		unsigned int flags = ImGuiFreeType::ForceAutoHint;
+		io.Fonts->AddFontFromFileTTF("..\\..\\resources\\fonts\\Open_Sans\\OpenSans-Regular.ttf", 18.0f);
+		ImGuiFreeType::BuildFontAtlas(io.Fonts, flags);
 
 
 	}

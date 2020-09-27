@@ -50,6 +50,9 @@ set_target_properties(${GLAD_LIB_NAME} PROPERTIES FOLDER "Glad_Imgui")
 ########################################################################
 set(IMGUI_LIB_NAME "ImGui")
 
+set (FREETYPE_LIB_NAME "freetype")
+
+
 set(IMGUI_SOURCES
     "${IMGUI_LIB_NAME}/imgui.cpp"
     "${IMGUI_LIB_NAME}/imgui_demo.cpp"
@@ -57,7 +60,7 @@ set(IMGUI_SOURCES
     "${IMGUI_LIB_NAME}/imgui_widgets.cpp"
     "${IMGUI_LIB_NAME}/examples/imgui_impl_glfw.cpp"
     "${IMGUI_LIB_NAME}/examples/imgui_impl_opengl3.cpp"
-    "${IMGUI_LIB_NAME}/misc/fonts/binary_to_compressed_c.cpp"
+    "${IMGUI_LIB_NAME}/misc/freetype/imgui_freetype.cpp"
 
 )
 
@@ -71,6 +74,7 @@ set(IMGUI_HEADERS
     "${IMGUI_LIB_NAME}/stb_image.h"
     "${IMGUI_LIB_NAME}/examples/imgui_impl_glfw.h"
     "${IMGUI_LIB_NAME}/examples/imgui_impl_opengl3.h"
+    "${IMGUI_LIB_NAME}/misc/freetype/imgui_freetype.h"
 )
 
 set(IMGUI_INC_PATH "${IMGUI_LIB_NAME}/")
@@ -91,6 +95,13 @@ target_include_directories(${IMGUI_LIB_NAME}
         "${IMGUI_INC_PATH}"
         "${GLFW_INC_PATH}"
         "${GLAD_INC_PATH}"
+        "${FREETYPE_LIB_NAME}/include/"
+)
+
+target_link_libraries(${IMGUI_LIB_NAME} 
+    PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/freetype/win64/freetype.lib 
+    #"D:\\workspace\\Fusion_View\\dependencies\\freetype\\win64\\freetype.lib"
 )
 
 set_target_properties(${IMGUI_LIB_NAME} PROPERTIES FOLDER "Glad_Imgui")

@@ -54,7 +54,9 @@ bool fv::Main_Menu::msw_window_view()
 	ImGui::NewLine();
 	ImGui::NewLine();
 	ImGui::NewLine();
-	ImGui::Image((void*)(intptr_t)texture, ImVec2((float)w*10, (float)h*10));
+	//ImGui::Image((void*)(intptr_t)texture, ImVec2((float)w*10, (float)h*10));
+	ImGui::TextDisabled("Fusion View");
+	ImGui::Text("WOW\n What i wish i was doing with all the skills and Summary\n Monte Corlos");
 	ImGui::End();
 
 	return true;

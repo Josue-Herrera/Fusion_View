@@ -39,7 +39,7 @@ namespace fv {
 				imgui->test_ForceShutdown();
 
 			//Example -> you only need to call the Imgui Functions in here and you have to manage state in certain circumstances.
-			//imgui->showDemo();
+			imgui->showDemo();
 
 			imgui->end();
 		}
