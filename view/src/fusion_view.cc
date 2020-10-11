@@ -38,6 +38,8 @@ namespace fv {
 			if (should_close)
 				imgui->test_ForceShutdown();
 
+			ImGui::ShowMetricsWindow();
+		
 			//Example -> you only need to call the Imgui Functions in here and you have to manage state in certain circumstances.
 			imgui->showDemo();
 

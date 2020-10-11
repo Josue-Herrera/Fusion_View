@@ -49,7 +49,7 @@ set_target_properties(${GLAD_LIB_NAME} PROPERTIES FOLDER "Glad_Imgui")
 # Adding imgui to Framework
 ########################################################################
 set(IMGUI_LIB_NAME "ImGui")
-
+set(IMGUI_ADDONS "imgui_addons")
 set (FREETYPE_LIB_NAME "freetype")
 
 
@@ -61,7 +61,6 @@ set(IMGUI_SOURCES
     "${IMGUI_LIB_NAME}/examples/imgui_impl_glfw.cpp"
     "${IMGUI_LIB_NAME}/examples/imgui_impl_opengl3.cpp"
     "${IMGUI_LIB_NAME}/misc/freetype/imgui_freetype.cpp"
-
 )
 
 set(IMGUI_HEADERS
@@ -71,15 +70,18 @@ set(IMGUI_HEADERS
     "${IMGUI_LIB_NAME}/imstb_rectpack.h"
     "${IMGUI_LIB_NAME}/imstb_textedit.h"
     "${IMGUI_LIB_NAME}/imstb_truetype.h"
-    "${IMGUI_LIB_NAME}/stb_image.h"
     "${IMGUI_LIB_NAME}/examples/imgui_impl_glfw.h"
     "${IMGUI_LIB_NAME}/examples/imgui_impl_opengl3.h"
     "${IMGUI_LIB_NAME}/misc/freetype/imgui_freetype.h"
+   
+ #external_addons
+    "${IMGUI_ADDONS}/stb_image.h"
 )
 
 set(IMGUI_INC_PATH "${IMGUI_LIB_NAME}/")
+set(IMGUI_ADDONS_PATH "${IMGUI_ADDONS}/")
 
-add_library(${IMGUI_LIB_NAME}
+add_library(${IMGUI_LIB_NAME} 
     STATIC
         ${IMGUI_SOURCES}
         ${IMGUI_HEADERS}
@@ -93,6 +95,7 @@ target_compile_definitions(${IMGUI_LIB_NAME}
 target_include_directories(${IMGUI_LIB_NAME}
     PUBLIC
         "${IMGUI_INC_PATH}"
+        "${IMGUI_ADDONS_PATH}"
         "${GLFW_INC_PATH}"
         "${GLAD_INC_PATH}"
         "${FREETYPE_LIB_NAME}/include/"
@@ -101,7 +104,6 @@ target_include_directories(${IMGUI_LIB_NAME}
 target_link_libraries(${IMGUI_LIB_NAME} 
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/freetype/win64/freetype.lib 
-    #"D:\\workspace\\Fusion_View\\dependencies\\freetype\\win64\\freetype.lib"
 )
 
 set_target_properties(${IMGUI_LIB_NAME} PROPERTIES FOLDER "Glad_Imgui")

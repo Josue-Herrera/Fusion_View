@@ -29,6 +29,8 @@ namespace fv {
 		fv::width = width;
 		fv::height = height;
 		glViewport(0, 0, fv::width, fv::height);
+
+		
 	}
 
 	Fusion_Imgui::Fusion_Imgui()
@@ -68,9 +70,9 @@ namespace fv {
 		ImGui_ImplOpenGL3_Init(glsl_version);
 	
 		unsigned int flags = ImGuiFreeType::ForceAutoHint;
-		io.Fonts->AddFontFromFileTTF("..\\..\\resources\\fonts\\Open_Sans\\OpenSans-Regular.ttf", 18.0f);
+		io.Fonts->AddFontFromFileTTF("..\\..\\resources\\fonts\\Open_Sans\\OpenSans-SemiBold.ttf", 18.0f);
 		ImGuiFreeType::BuildFontAtlas(io.Fonts, flags);
-
+		
 
 	}
 	Fusion_Imgui::~Fusion_Imgui()
@@ -152,5 +154,6 @@ namespace fv {
 		glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
 		glClear(GL_COLOR_BUFFER_BIT);
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		//ImGui::UpdatePlatformWindows();
 	}
 }
