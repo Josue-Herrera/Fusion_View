@@ -13,24 +13,11 @@ set(GLFW_INSTALL        OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(${GLFW_LIB_NAME})
 
-########################################################################
-# Adding glm to Framework
-########################################################################
-set(GLM_LIB_NAME "glm")
-set(GLM_INC_PATH ${GLM_LIB_NAME}/glm)
-
-add_library(${GLM_LIB_NAME} INTERFACE)
-
-target_include_directories(${GLM_LIB_NAME}
-    INTERFACE
-        ${GLM_INC_PATH}
-)
-
 
 ########################################################################
 # Adding glad to Framework
 ########################################################################
-set(GLAD_LIB_NAME "glad")
+set(GLAD_LIB_NAME "glad") 
 set(GLAD_SRC_PATH "${GLAD_LIB_NAME}/src")
 set(GLAD_INC_PATH "${GLAD_LIB_NAME}/include")
 
