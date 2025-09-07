@@ -1,4 +1,4 @@
-#include "gui_stack.h"
+#include "panels/gui_stack.h"
 #include <algorithm>
 namespace fv {
 
@@ -28,3 +28,4 @@ namespace fv {
 		}
 	}
 }
+

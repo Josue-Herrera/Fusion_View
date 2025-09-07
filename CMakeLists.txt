@@ -29,7 +29,7 @@ cmrc_add_resource_library(
      resources/test.txt
 )
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 
 add_subdirectory(dependencies)
 add_subdirectory(view)

@@ -144,3 +144,30 @@ CPMAddPackage(
 if(TARGET glm::glm AND NOT TARGET glm)
     add_library(glm ALIAS glm::glm)
 endif()
+
+########################################################################
+# Additional libs: ImPlot, spdlog, fmt, nlohmann_json
+########################################################################
+CPMAddPackage(
+    NAME implot
+    GITHUB_REPOSITORY epezent/implot
+    GIT_TAG v0.16
+)
+
+CPMAddPackage(
+    NAME spdlog
+    GITHUB_REPOSITORY gabime/spdlog
+    GIT_TAG v1.13.0
+)
+
+CPMAddPackage(
+    NAME fmt
+    GITHUB_REPOSITORY fmtlib/fmt
+    GIT_TAG 11.0.2
+)
+
+CPMAddPackage(
+    NAME nlohmann_json
+    GITHUB_REPOSITORY nlohmann/json
+    GIT_TAG v3.11.3
+)

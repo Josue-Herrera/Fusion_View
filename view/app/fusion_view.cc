@@ -1,6 +1,7 @@
-#include "fusion_view.h"
-#include "imgui.h"
-#include "components.h"
+#include "app/fusion_view.h"
+#include "app/app_context.h"
+#include <imgui.h>
+#include "panels/components.h"
 #include <cmrc/cmrc.hpp>
 #include <algorithm>
 
@@ -10,6 +11,9 @@ namespace fv {
 	Fusion_View::Fusion_View()
 	{
 		imgui = new Fusion_Imgui();
+
+		// create basic context
+		ctx_ = app_context{};
 
 		loadComponents();
 		loadDarkStyle();
@@ -26,22 +30,14 @@ namespace fv {
 		while (not imgui->shutdown()) {
 			imgui->start();
 			
-			// Add a layer stack of IMGUI Functions organized in the appropriate order.
-			// this is odd but still  good i think !! needs more redesign. Not satisfied with the code yet
-			// but its working
-			for (const auto component : gui_stack )
+			for (const auto component : gui_stack)
 			{
 				component->RenderGui();
 			}
-			//Example of how EZ it is.
 			if (should_close)
 				imgui->ForceShutdown();
 
-			ImGui::ShowMetricsWindow();
-		
-			//Example -> you only need to call the Imgui Functions in here and you have to manage state in certain circumstances.
-			//imgui->showDemo();
-
+		ImGui::ShowMetricsWindow();
 			fv::Fusion_Imgui::end();
 		}
 	}
@@ -53,13 +49,8 @@ namespace fv {
 	}
 	void Fusion_View::loadDarkStyle()
 	{
-	
-
 		auto & style = ImGui::GetStyle();
-		
 		style.FrameRounding = 4.0f;
-		
-		// *** Main Settings *** 
 		style.WindowPadding = { 10.0f, 4.0f };
 		style.FramePadding = { 10.0f, 4.0f };
 		style.ItemSpacing = { 9.0f, 6.0f };
@@ -68,13 +59,9 @@ namespace fv {
 		style.IndentSpacing = 20.0f;
 		style.ScrollbarSize = 10.f;
 		style.GrabMinSize = 11.0f;
-		
-		// *** Borders ***
 		style.WindowBorderSize = 0.0f;
 		style.ChildBorderSize = 0.0f;
 		style.PopupBorderSize = 0.0f;
-
-		// *** Rounding ***
 		style.WindowRounding = 4.0f;
 		style.ChildRounding = 4.0f;
 		style.FrameRounding = 4.0f;
@@ -82,14 +69,12 @@ namespace fv {
 		style.ScrollbarRounding = 4.0f;
 		style.GrabRounding = 4.0f;
 		style.TabRounding = 4.0f;
-
-		// *** Alignment ***
 		style.WindowMenuButtonPosition = ImGuiDir_Right;
 
 		auto & colors = ImGui::GetStyle().Colors;
 		colors[ImGuiCol_Text] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
 		colors[ImGuiCol_TextDisabled] = ImVec4(0.60f, 0.60f, 0.60f, 1.00f);
-		colors[ImGuiCol_WindowBg] = ImVec4(0.299f, 0.281f, 0.302f, 1.00f);// old color gonna use for dark MSW ImVec4(0.19f, 0.18f, 0.18f, 1.00f);
+		colors[ImGuiCol_WindowBg] = ImVec4(0.299f, 0.281f, 0.302f, 1.00f);
 		colors[ImGuiCol_ChildBg] = ImVec4(0.44f, 0.32f, 0.32f, 0.00f);
 		colors[ImGuiCol_PopupBg] = ImVec4(0.12f, 0.11f, 0.11f, 0.98f);
 		colors[ImGuiCol_Border] = ImVec4(0.55f, 0.45f, 0.45f, 0.30f);
@@ -100,7 +85,7 @@ namespace fv {
 		colors[ImGuiCol_TitleBg] = ImVec4(0.44f, 0.38f, 0.38f, 1.00f);
 		colors[ImGuiCol_TitleBgActive] = ImVec4(0.37f, 0.37f, 0.37f, 1.00f);
 		colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.77f, 0.76f, 0.76f, 0.51f);
-		colors[ImGuiCol_MenuBarBg] = ImVec4(0.30f, 0.26f, 0.26f, 1.00f); //old  ImVec4(0.09f, 0.08f, 0.08f, 1.00f);
+		colors[ImGuiCol_MenuBarBg] = ImVec4(0.30f, 0.26f, 0.26f, 1.00f);
 		colors[ImGuiCol_ScrollbarBg] = ImVec4(0.98f, 0.98f, 0.98f, 0.53f);
 		colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.69f, 0.69f, 0.69f, 0.80f);
 		colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.49f, 0.49f, 0.49f, 0.80f);
