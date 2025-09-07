@@ -13,10 +13,10 @@ namespace fv {
 		Fusion_Imgui();
 		~Fusion_Imgui();
 		void start() const;
-		void end();
+		static void end();
 		void showDemo();
-		bool shutdown();
-		void test_ForceShutdown() { glfwSetWindowShouldClose(fv_window, GLFW_TRUE); };
+		bool shutdown() const;
+		void ForceShutdown() const { glfwSetWindowShouldClose(fv_window, GLFW_TRUE); };
 	private:
 		bool show_demo_window = true;
 		bool show_another_window = false;

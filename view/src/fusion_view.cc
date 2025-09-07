@@ -3,7 +3,6 @@
 #include "components.h"
 #include <cmrc/cmrc.hpp>
 #include <algorithm>
-#include "imgui_helper.h"
 
 CMRC_DECLARE(fv);
 
@@ -36,14 +35,14 @@ namespace fv {
 			}
 			//Example of how EZ it is.
 			if (should_close)
-				imgui->test_ForceShutdown();
+				imgui->ForceShutdown();
 
 			ImGui::ShowMetricsWindow();
 		
 			//Example -> you only need to call the Imgui Functions in here and you have to manage state in certain circumstances.
 			//imgui->showDemo();
 
-			imgui->end();
+			fv::Fusion_Imgui::end();
 		}
 	}
 
@@ -136,7 +135,5 @@ namespace fv {
 		colors[ImGuiCol_NavWindowingHighlight] = ImVec4(0.70f, 0.70f, 0.70f, 0.70f);
 		colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.20f, 0.20f, 0.20f, 0.20f);
 		colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.20f, 0.20f, 0.20f, 0.35f);
-
-
 	}
 }

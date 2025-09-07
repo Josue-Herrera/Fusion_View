@@ -9,7 +9,7 @@ namespace fv {
 		~Gui_Stack();
 
 		void PushGui(Layer* layer);
-		void PopGui(Layer* layer);
+		void PopGui(const Layer* layer);
 
 
 		std::vector<Layer*>::iterator begin() { return gui_layers.begin(); }

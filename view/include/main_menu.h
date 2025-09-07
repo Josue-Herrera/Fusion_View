@@ -30,7 +30,7 @@ namespace fv {
 		bool main_side_open{};
 		int msw_starting_height{};
 		msw_window_size msw_size{};
-		bool msw_window_view();
+		static bool msw_window_view();
 		void msw_set_window_size();
 		void header_bar();
 	};

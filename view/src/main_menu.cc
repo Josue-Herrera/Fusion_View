@@ -16,7 +16,7 @@ constexpr float initial_height= 600;
 
 enum class pos {LEFT, RIGHT, CENTER};
 
-void Layout_Parent(pos dir, ImVec2 FixedSizedObject) {
+void Layout_Parent(const pos dir, const ImVec2& FixedSizedObject) {
 	auto io = ImGui::GetIO();
 	auto [w, h] = io.DisplaySize;
 
@@ -34,7 +34,7 @@ void Layout_Parent(pos dir, ImVec2 FixedSizedObject) {
 	ImGui::SetNextWindowSize(FixedSizedObject);
 }
 
-void Layout_Item(pos dir, ImVec2 FixedSizedObject) {
+void Layout_Item(const pos dir, const ImVec2& FixedSizedObject) {
 
 	auto [w,h] = ImGui::GetWindowSize();
 
@@ -53,23 +53,17 @@ void Layout_Item(pos dir, ImVec2 FixedSizedObject) {
 
 bool fv::Main_Menu::msw_window_view()
 {
-	ImGuiWindowFlags msw_flags2 = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar
+	constexpr ImGuiWindowFlags msw_flags2 = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar
 		| ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
-
-	float width, height;
-	width = initial_width;
-	height = initial_height;
-	ImVec2 test(0, 0);
 
 	Layout_Parent(pos::CENTER, ImVec2(200,200));
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.73f, 0.51f, 0.51f, 1.0f));
 
+	bool open = true;
+	ImGui::Begin("test", &open, msw_flags2);
 
-	ImGui::Begin("test",(bool*)true,msw_flags2);
-
-	Layout_Item(pos::CENTER, test);
+	Layout_Item(pos::CENTER, ImVec2(0,0));
 	ImGui::Text("Center? TOP LEFT!");
-	test = ImGui::GetItemRectSize();
 
 	ImGui::End();
 	ImGui::PopStyleColor();

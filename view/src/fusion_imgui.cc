@@ -134,7 +134,7 @@ namespace fv {
 
 	}
 
-	bool Fusion_Imgui::shutdown()
+	bool Fusion_Imgui::shutdown() const
 	{
 		return glfwWindowShouldClose(fv_window);
 	}
@@ -143,7 +143,6 @@ namespace fv {
 
 	void Fusion_Imgui::end()
 	{
-
 		// Rendering
 		ImGui::Render();
 		glViewport(0, 0, fv::width, fv::height);

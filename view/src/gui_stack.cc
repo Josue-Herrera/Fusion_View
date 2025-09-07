@@ -4,7 +4,7 @@ namespace fv {
 
 	Gui_Stack::~Gui_Stack()
 	{
-		for (Layer* layer : gui_layers)
+		for (const Layer* layer : gui_layers)
 		{
 			delete layer;
 		}
@@ -16,10 +16,10 @@ namespace fv {
 		gui_LayerInsertIndex++;
 	}
 
-	void Gui_Stack::PopGui(Layer* layer)
+	void Gui_Stack::PopGui(const Layer* layer)
 	{
-		auto it = std::find(gui_layers.begin(), gui_layers.begin() + gui_LayerInsertIndex, layer);
-		if (it != gui_layers.begin() + gui_LayerInsertIndex)
+		if (const auto it = std::find(gui_layers.begin(), gui_layers.begin() + gui_LayerInsertIndex, layer);
+			it != gui_layers.begin() + gui_LayerInsertIndex)
 		{
 			{
 				gui_layers.erase(it);
