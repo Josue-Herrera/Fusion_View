@@ -1,5 +1,5 @@
 #include "gui_stack.h"
-
+#include <algorithm>
 namespace fv {
 
 	Gui_Stack::~Gui_Stack()

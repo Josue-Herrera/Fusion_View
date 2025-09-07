@@ -1,2 +1,4 @@
 build
+dependencies/glad
 *ini
+.idea

@@ -1,36 +1,30 @@
+#include "fusion_imgui.h"
+
+// *** 3rdparty ***
+#include "misc/freetype/imgui_freetype.h"
 
 #ifdef WIN32
 #include <Windows.h>
-#endif // console Hide commands
+#endif // WIN32
 
 #include <iostream>
 
-#include "..\include\fusion_imgui.h"
 
-#include "misc/freetype/imgui_freetype.h"
-#include "misc/freetype/imgui_freetype.cpp"
-
-
-/// <summary>
-/// This code NEEDS a REDESIGN PLS HELP DANNY !! 
-/// </summary>
 namespace fv {
 	static int width;
 	static int height;
-	static  ImVec4 clear_color = ImVec4(0.1f, 0.1f, 0.10f, 1.00f);
+	static auto clear_color = ImVec4(0.1f, 0.1f, 0.10f, 1.00f);
 
-	void glfw_error_callbacks(int error, const char* description)
+	void glfw_error_callbacks(const int error, const char* description)
 	{
 		fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 	}
 
-	void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+	void framebuffer_size_callback(GLFWwindow* window, const int width, const int height)
 	{
 		fv::width = width;
 		fv::height = height;
 		glViewport(0, 0, fv::width, fv::height);
-
-		
 	}
 
 	Fusion_Imgui::Fusion_Imgui()
@@ -48,7 +42,7 @@ namespace fv {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-		if (fv_window = glfwCreateWindow(800, 600, "Fusion View", NULL, NULL); fv_window == NULL)
+		if (fv_window = glfwCreateWindow(800, 600, "Fusion View", nullptr, nullptr); not fv_window)
 		{
 			std::cout << "fv::window_view::createWindow() Failed to create GLFW window" << std::endl;
 			glfwTerminate();
@@ -66,12 +60,14 @@ namespace fv {
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 		
 		ImGui_ImplGlfw_InitForOpenGL(fv_window, true);
-		const char* glsl_version = "#version 410";
+		const auto glsl_version = "#version 410";
 		ImGui_ImplOpenGL3_Init(glsl_version);
-	
-		unsigned int flags = ImGuiFreeType::ForceAutoHint;
-		io.Fonts->AddFontFromFileTTF("..\\..\\resources\\fonts\\Open_Sans\\OpenSans-SemiBold.ttf", 18.0f);
-		ImGuiFreeType::BuildFontAtlas(io.Fonts, flags);
+
+		constexpr unsigned int flags = ImGuiFreeTypeBuilderFlags_ForceAutoHint;
+		io.Fonts->AddFontFromFileTTF(R"(..\..\resources\fonts\Open_Sans\OpenSans-SemiBold.ttf)", 18.0f);
+		io.Fonts->FontBuilderIO = ImGuiFreeType::GetBuilderForFreeType();
+		io.Fonts->FontBuilderFlags = flags;
+		io.Fonts->Build();
 		
 
 	}
@@ -86,7 +82,7 @@ namespace fv {
 
 		
 	}
-	void Fusion_Imgui::start()
+	void Fusion_Imgui::start() const
 	{
 		glfwPollEvents();
 		glfwSwapBuffers(fv_window);
@@ -114,7 +110,7 @@ namespace fv {
 			ImGui::Checkbox("Another Window", &show_another_window);
 
 			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-			ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+			ImGui::ColorEdit3("clear color", reinterpret_cast<float*>(&clear_color)); // Edit 3 floats representing a color
 
 			if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
 				counter++;

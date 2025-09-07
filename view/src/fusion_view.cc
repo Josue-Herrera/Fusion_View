@@ -24,13 +24,13 @@ namespace fv {
 	void Fusion_View::run()
 	{
 
-		while (!imgui->shutdown()) {
+		while (not imgui->shutdown()) {
 			imgui->start();
 			
 			// Add a layer stack of IMGUI Functions organized in the appropriate order.
 			// this is odd but still  good i think !! needs more redesign. Not satisfied with the code yet
 			// but its working
-			for ( auto component : gui_stack )
+			for (const auto component : gui_stack )
 			{
 				component->RenderGui();
 			}
@@ -41,7 +41,7 @@ namespace fv {
 			ImGui::ShowMetricsWindow();
 		
 			//Example -> you only need to call the Imgui Functions in here and you have to manage state in certain circumstances.
-			imgui->showDemo();
+			//imgui->showDemo();
 
 			imgui->end();
 		}

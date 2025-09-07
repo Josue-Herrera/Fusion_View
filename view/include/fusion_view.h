@@ -13,9 +13,9 @@ namespace fv {
 		void run();
 	private:
 
-		ImFont* label_font;
+		ImFont* label_font{};
 		void loadComponents();
-		void loadDarkStyle();
+		static void loadDarkStyle();
 		Fusion_Imgui* imgui;
 		Gui_Stack gui_stack;
 		bool should_close = false;

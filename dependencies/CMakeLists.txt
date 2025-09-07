@@ -1,96 +1,146 @@
 ########################################################################
-# Adding GLFW to Framework
+# CPM bootstrap
+########################################################################
+include(FetchContent)
+
+set(CPM_DOWNLOAD_VERSION 0.38.6)
+set(CPM_DOWNLOAD_LOCATION "${CMAKE_BINARY_DIR}/cmake/CPM.cmake")
+if(NOT EXISTS ${CPM_DOWNLOAD_LOCATION})
+    message(STATUS "Downloading CPM.cmake v${CPM_DOWNLOAD_VERSION}")
+    file(DOWNLOAD
+        https://github.com/cpm-cmake/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake
+        ${CPM_DOWNLOAD_LOCATION}
+        TLS_VERIFY ON)
+endif()
+include(${CPM_DOWNLOAD_LOCATION})
+
+########################################################################
+# GLFW via CPM
 ########################################################################
 set(GLFW_LIB_NAME "glfw")
 set(GLFW_INC_PATH ${GLFW_LIB_NAME}/include)
 
-set(GLFW_BUILD_DOCS     OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_TESTS    OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-#set(GLFW_VULKAN_STATIC  OFF CACHE BOOL "" FORCE)    # OFF by default
-#set(BUILD_SHARED_LIBS   OFF CACHE BOOL "" FORCE)    # OFF by default
-set(GLFW_INSTALL        OFF CACHE BOOL "" FORCE)
-
-add_subdirectory(${GLFW_LIB_NAME})
-
-
-########################################################################
-# Adding glad to Framework
-########################################################################
-set(GLAD_LIB_NAME "glad") 
-set(GLAD_SRC_PATH "${GLAD_LIB_NAME}/src")
-set(GLAD_INC_PATH "${GLAD_LIB_NAME}/include")
-
-add_library( ${GLAD_LIB_NAME}
-    STATIC
-        "${GLAD_SRC_PATH}/glad.c"
-)
-target_include_directories(${GLAD_LIB_NAME}
-    PUBLIC
-        "${GLAD_INC_PATH}"
+CPMAddPackage(
+    NAME glfw
+    GITHUB_REPOSITORY glfw/glfw
+    GIT_TAG 3.3.8
+    OPTIONS
+        "GLFW_BUILD_DOCS OFF"
+        "GLFW_BUILD_TESTS OFF"
+        "GLFW_BUILD_EXAMPLES OFF"
+        "GLFW_INSTALL OFF"
 )
 
-set_target_properties(${GLAD_LIB_NAME} PROPERTIES FOLDER "Glad_Imgui")
 
 ########################################################################
-# Adding imgui to Framework
+# GLAD via CPM (generator)
 ########################################################################
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
+
+CPMAddPackage(
+    NAME glad_py
+    GITHUB_REPOSITORY Dav1dde/glad
+    GIT_TAG v0.1.36
+    DOWNLOAD_ONLY YES
+)
+
+set(GLAD_OUT_DIR ${CMAKE_BINARY_DIR}/generated/glad)
+set(GLAD_INCLUDE_DIR ${GLAD_OUT_DIR}/include)
+set(GLAD_SOURCE ${GLAD_OUT_DIR}/src/glad.c)
+
+add_custom_target(glad_py_fetch DEPENDS ${glad_py_SOURCE_DIR}/glad/__main__.py)
+
+add_custom_command(
+    OUTPUT ${GLAD_SOURCE}
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${GLAD_OUT_DIR}
+    COMMAND ${CMAKE_COMMAND} -E env PYTHONPATH=${glad_py_SOURCE_DIR} ${Python3_EXECUTABLE} -m glad --generator c --spec gl --api gl=3.3 --profile core --out-path ${GLAD_OUT_DIR}
+    DEPENDS glad_py_fetch
+    COMMENT "Generating GLAD (OpenGL 3.3 core)"
+    VERBATIM
+)
+
+add_library(glad STATIC ${GLAD_SOURCE})
+target_include_directories(glad PUBLIC ${GLAD_INCLUDE_DIR})
+set_target_properties(glad PROPERTIES FOLDER "Glad_Imgui")
+
+########################################################################
+# FreeType via CPM
+########################################################################
+CPMAddPackage(
+    NAME freetype
+    GITHUB_REPOSITORY freetype/freetype
+    GIT_TAG VER-2-13-3
+    OPTIONS
+        "BUILD_SHARED_LIBS OFF"
+        "CMAKE_POSITION_INDEPENDENT_CODE ON"
+        "FT_WITH_ZLIB OFF"
+        "FT_WITH_BZIP2 OFF"
+        "FT_WITH_PNG OFF"
+        "FT_WITH_HARFBUZZ OFF"
+        "FT_WITH_BROTLI OFF"
+)
+
+########################################################################
+# ImGui via CPM (fetched sources + backends)
+########################################################################
+CPMAddPackage(
+    NAME imgui
+    GITHUB_REPOSITORY ocornut/imgui
+    VERSION 1.90.9
+)
+
 set(IMGUI_LIB_NAME "ImGui")
-set(IMGUI_ADDONS "imgui_addons")
-set (FREETYPE_LIB_NAME "freetype")
 
-
-set(IMGUI_SOURCES
-    "${IMGUI_LIB_NAME}/imgui.cpp"
-    "${IMGUI_LIB_NAME}/imgui_demo.cpp"
-    "${IMGUI_LIB_NAME}/imgui_draw.cpp"
-    "${IMGUI_LIB_NAME}/imgui_widgets.cpp"
-    "${IMGUI_LIB_NAME}/examples/imgui_impl_glfw.cpp"
-    "${IMGUI_LIB_NAME}/examples/imgui_impl_opengl3.cpp"
-    "${IMGUI_LIB_NAME}/misc/freetype/imgui_freetype.cpp"
+########################################################################
+# STB via CPM (header-only)
+########################################################################
+CPMAddPackage(
+    NAME stb
+    GITHUB_REPOSITORY nothings/stb
+    GIT_TAG master
+    DOWNLOAD_ONLY YES
 )
 
-set(IMGUI_HEADERS
-    "${IMGUI_LIB_NAME}/imconfig.h"
-    "${IMGUI_LIB_NAME}/imgui.h"
-    "${IMGUI_LIB_NAME}/imgui_internal.h"
-    "${IMGUI_LIB_NAME}/imstb_rectpack.h"
-    "${IMGUI_LIB_NAME}/imstb_textedit.h"
-    "${IMGUI_LIB_NAME}/imstb_truetype.h"
-    "${IMGUI_LIB_NAME}/examples/imgui_impl_glfw.h"
-    "${IMGUI_LIB_NAME}/examples/imgui_impl_opengl3.h"
-    "${IMGUI_LIB_NAME}/misc/freetype/imgui_freetype.h"
-   
- #external_addons
-    "${IMGUI_ADDONS}/stb_image.h"
+add_library(${IMGUI_LIB_NAME} STATIC
+    ${imgui_SOURCE_DIR}/imgui.cpp
+    ${imgui_SOURCE_DIR}/imgui_demo.cpp
+    ${imgui_SOURCE_DIR}/imgui_draw.cpp
+    ${imgui_SOURCE_DIR}/imgui_tables.cpp
+    ${imgui_SOURCE_DIR}/imgui_widgets.cpp
+    ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
+    ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+    ${imgui_SOURCE_DIR}/misc/freetype/imgui_freetype.cpp
 )
 
-set(IMGUI_INC_PATH "${IMGUI_LIB_NAME}/")
-set(IMGUI_ADDONS_PATH "${IMGUI_ADDONS}/")
-
-add_library(${IMGUI_LIB_NAME} 
-    STATIC
-        ${IMGUI_SOURCES}
-        ${IMGUI_HEADERS}
-)
-
-target_compile_definitions(${IMGUI_LIB_NAME}
-    PRIVATE
-        IMGUI_IMPL_OPENGL_LOADER_GLAD=1
-)
+target_compile_definitions(${IMGUI_LIB_NAME} PRIVATE IMGUI_IMPL_OPENGL_LOADER_GLAD=1)
 
 target_include_directories(${IMGUI_LIB_NAME}
     PUBLIC
-        "${IMGUI_INC_PATH}"
-        "${IMGUI_ADDONS_PATH}"
-        "${GLFW_INC_PATH}"
-        "${GLAD_INC_PATH}"
-        "${FREETYPE_LIB_NAME}/include/"
+        ${imgui_SOURCE_DIR}
+        ${imgui_SOURCE_DIR}/backends
+        ${stb_SOURCE_DIR}
+        ${GLAD_INCLUDE_DIR}
 )
 
-target_link_libraries(${IMGUI_LIB_NAME} 
+target_link_libraries(${IMGUI_LIB_NAME}
     PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/freetype/win64/freetype.lib 
+        glfw
+        freetype
+        glad
 )
 
 set_target_properties(${IMGUI_LIB_NAME} PROPERTIES FOLDER "Glad_Imgui")
+
+########################################################################
+# GLM via CPM (header-only)
+########################################################################
+CPMAddPackage(
+    NAME glm
+    GITHUB_REPOSITORY g-truc/glm
+    GIT_TAG 1.0.1
+)
+
+# Ensure expected alias exists for consumer targets
+if(TARGET glm::glm AND NOT TARGET glm)
+    add_library(glm ALIAS glm::glm)
+endif()

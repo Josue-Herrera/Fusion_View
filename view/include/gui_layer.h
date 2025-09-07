@@ -1,18 +1,17 @@
 #pragma once 
 
 #include <string>
+#include <utility>
 
 namespace fv {
 	class Layer
 	{
 	public:
 
-		Layer(const std::string& name = "Layer") : name{ name } {};
+		explicit Layer(std::string name = "Layer") : name{std::move( name )} {};
 		virtual ~Layer() = default;
-
 		virtual void RenderGui() {}
-
-		const std::string& GetName() const { return name; }
+		[[nodiscard]] const std::string& GetName() const { return name; }
 	protected:
 		std::string name;
 	};

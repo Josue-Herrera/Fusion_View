@@ -1,8 +1,8 @@
 #pragma once 
 
 #include "imgui.h"
-#include "examples/imgui_impl_glfw.h"
-#include "examples/imgui_impl_opengl3.h"
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_opengl3.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -12,7 +12,7 @@ namespace fv {
 	public:
 		Fusion_Imgui();
 		~Fusion_Imgui();
-		void start();
+		void start() const;
 		void end();
 		void showDemo();
 		bool shutdown();

@@ -9,8 +9,8 @@ bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_wid
     // Load from file
     int image_width = 0;
     int image_height = 0;
-    unsigned char* image_data = stbi_load(filename, &image_width, &image_height, NULL, 4);
-    if (image_data == NULL)
+    unsigned char* image_data = stbi_load(filename, &image_width, &image_height, nullptr, 4);
+    if (image_data == nullptr)
         return false;
 
     // Create a OpenGL texture identifier
@@ -34,13 +34,13 @@ bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_wid
     return true;
 }
 
-bool LoadTextureFromMemory(const unsigned char* Data, int size, GLuint* out_texture, int* out_width, int* out_height)
+bool LoadTextureFromMemory(const unsigned char* Data, const int size, GLuint* out_texture, int* out_width, int* out_height)
 {
     // Load from file
     int image_width = 0;
     int image_height = 0;
-    unsigned char* image_data = stbi_load_from_memory(Data, size, &image_width, &image_height, NULL, 4);
-    if (image_data == NULL)
+    unsigned char* image_data = stbi_load_from_memory(Data, size, &image_width, &image_height, nullptr, 4);
+    if (image_data == nullptr)
         return false;
 
     // Create a OpenGL texture identifier
